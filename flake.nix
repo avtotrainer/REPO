@@ -19,10 +19,15 @@
       pkgs.stdenv.mkDerivation {
         name = "jpl-site";
         src = ./src;
-        buildInputs = [ pkgs.ruby ];
+
+        nativeBuildInputs = [
+          pkgs.jekyll
+        ];
+
         buildPhase = ''
           jekyll build -s . -d $out
         '';
+
         installPhase = "true";
       };
   };
