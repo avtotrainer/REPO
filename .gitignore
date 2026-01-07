@@ -27,8 +27,8 @@ vendor/bundle/
 # ===============================
 # Nix local outputs (NEVER COMMIT)
 # ===============================
-result
-result-*
+# result
+# result-*
 /nix
 
 # ===============================
