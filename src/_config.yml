@@ -1,0 +1,5 @@
+title: JPL Demo Site
+description: Local Jekyll build, static deploy
+markdown: kramdown
+permalink: pretty
+

@@ -1,0 +1,38 @@
+# ===============================
+# OS / Editor junk
+# ===============================
+.DS_Store
+Thumbs.db
+*~
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# ===============================
+# Jekyll local junk (NEVER COMMIT)
+# ===============================
+src/.jekyll-cache/
+src/.sass-cache/
+src/.bundle/
+src/.jekyll-metadata/
+
+# ===============================
+# Ruby / Bundler local state
+# ===============================
+.bundle/
+vendor/bundle/
+*.gem
+
+# ===============================
+# Nix local outputs (NEVER COMMIT)
+# ===============================
+result
+result-*
+/nix
+
+# ===============================
+# Logs
+# ===============================
+*.log
+
