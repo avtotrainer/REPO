@@ -1,53 +1,31 @@
 {
-  description = "JPL — Local Jekyll build, static deploy";
+  description = "Minimal Jekyll site build with Nix";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
   };
 
   outputs = { self, nixpkgs }:
-  let
-    system = "x86_64-linux";
-    pkgs = nixpkgs.legacyPackages.${system};
-  in
-  {
-    # ─────────────────────────────────────────────
-    # Development shell (editor, bundix, etc.)
-    # ─────────────────────────────────────────────
-    devShells.${system}.default = pkgs.mkShell {
-      packages = [
-        pkgs.ruby
-        pkgs.bundix
-      ];
+    let
+      system = "x86_64-linux";
+      pkgs = import nixpkgs { inherit system; };
+    in {
+      packages.${system}.default =
+        pkgs.stdenv.mkDerivation {
+          name = "jekyll-site";
+          src = ./src;
+
+          buildInputs = [
+            pkgs.ruby
+            pkgs.rubyPackages.jekyll
+          ];
+
+          buildPhase = ''
+            jekyll build --source . --destination $out
+          '';
+
+          installPhase = "true";
+        };
     };
-
-    # ─────────────────────────────────────────────
-    # Build output (Jekyll → static HTML)
-    # ─────────────────────────────────────────────
-    packages.${system}.default =
-      pkgs.stdenv.mkDerivation {
-        pname = "jpl-site";
-        version = "1.0.0";
-
-        src = ./src;
-
-        nativeBuildInputs = [
-          pkgs.jekyll
-        ];
-
-        buildPhase = ''
-          jekyll build --source . --destination $out
-        '';
-
-        installPhase = "true";
-      };
-
-    # ─────────────────────────────────────────────
-    # THIS IS THE KEY PART
-    # Enables: `nix build` → ./result
-    # ─────────────────────────────────────────────
-    defaultPackage.${system} =
-      self.packages.${system}.default;
-  };
 }
 
